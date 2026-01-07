@@ -1,19 +1,25 @@
-// object
-/*
-Objeto que vai guardar os dados das atividades
-*/
-const atividade = {
-    nome: "Almoço",
-    data: new Date("2026-01-06 02:45"),
-    finalizada: true,
+
+const formatador = (data) => {
+    return {
+        dia: {
+            numerico: dayjs(data).format('DD'),
+            semana: {
+                curto: dayjs(data).format('ddd'),
+                longo: dayjs(data).format('dddd'),
+            }
+        },
+        mes: dayjs(data).format('MMMM'),
+        hora: dayjs(data).format('HH:mm')
+    }   
 }
 
+const atividade = {
+    nome: 'teste',
+    data: '1231-12-12',
+    finalizada: false,
+}
 
-// lista, array, vetor []
-/*
-Lista onde a gente vai adicionando as atividades para ter mais de uma na nossa aplicação
-*/
-const atividades = [
+let atividades = [
     atividade, 
     {
         nome: 'Academia em Grupo',
@@ -27,23 +33,9 @@ const atividades = [
     },
 ]
 
-
-// arrow function
-/*
-Nessa função a gente recebe o parametro de atividade
-cria uma variavel chamada input e adicona nela um input do tipo checkbos sem fechar a tag
-cria uma estrutura de condição com if para verificar se no objeto atividade ela foi finalizada
-    se sim, concatena o atributo checked
-    se não continua
-depois concatenamos o fechamento da tag
-retornamos a tag div com os valores da atividade:
-    o checkbox
-    o nome da atividade
-    data da atividade
-*/
 const criarItemDeAtividade = (atividade) => {
 
-    let input = '<input type="checkbox" '
+    let input = `<input onchange="concluirAtividade(event)" value="${atividade.data}" type="checkbox"`
 
     if(atividade.finalizada) {
         input += 'checked'
@@ -51,27 +43,104 @@ const criarItemDeAtividade = (atividade) => {
 
     input += '>'
 
+    const formatar = formatador(atividade.data)
+
     return `
             <div>
                 ${input}
                 <span>${atividade.nome}</span>
-                <time>${atividade.data}</time>
+                <time>${formatar.dia.semana.longo}, 
+                dia ${formatar.dia.numerico} de ${formatar.mes} 
+                às ${formatar.hora}</time>
             </div>
     `
 }
 
-// croiamos uma contante que vai receber um seletor do documento html, no qual é o section
-const section = document.querySelector('section')
 
-/*
-– o for percorre a lista atividades
-– a cada volta, ele pega uma atividade
-– chama a função criarItemDeAtividade(atividade)
-– essa função retorna um HTML (no seu caso, uma div)
-– esse HTML é inserido dentro da mesma section
-– resultado: várias divs, uma para cada atividade
-*/
-for(let atividade of atividades) {
-    section.innerHTML += criarItemDeAtividade(atividade)
+const atualizarListaDeAtividades = () => {
+    const section = document.querySelector('section')
+    section.innerHTML = ''
+    if(atividades.length != 0){
+        for(let atividade of atividades) {
+            section.innerHTML += criarItemDeAtividade(atividade)
+        }
+    } else {
+        section.innerHTML = '<p>Nenhuma atividade cadastrada!</p>'
+    }
+    
+
 }
 
+atualizarListaDeAtividades()
+
+const salvarAtividade = (event) => {
+    event.preventDefault()
+    const dadosDoFormulario = new FormData(event.target)
+    const nome = dadosDoFormulario.get('atividade')
+    const dia = dadosDoFormulario.get('dia')
+    const hora = dadosDoFormulario.get('hora')
+    const data = `${dia} ${hora}`
+
+
+    const novaAtividade = {
+    nome,
+    data,
+    finalizada: false,
+    }
+
+    const atividadeExiste = atividades.find((atividade) => {return atividade.data == novaAtividade.data})
+    if(atividadeExiste) {
+        return alert("Dia e Hora não disponivel!")
+    }
+    atividades = [novaAtividade, ...atividades]
+    atualizarListaDeAtividades()
+}
+
+const criarDiasSelecao = () => {
+    const dias = [
+        '2026-01-10',
+        '2026-02-05',
+        '2026-03-18',
+        '2026-04-22',
+        '2026-05-09',
+    ]
+    let diasSelecao = ''
+    for(let dia of dias) {
+        const formatar = formatador(dia)
+        const diaFormatado = `${formatar.dia.numerico} de ${formatar.mes}`
+        diasSelecao += `
+        <option value=${dia}>${diaFormatado}</option>
+        `
+    }
+
+    document.querySelector('select[name="dia"]').innerHTML = diasSelecao
+}
+
+criarDiasSelecao()
+
+const criarHorasSelecao = () => {
+    horasDisponiveis = ''
+    for(let i = 6; i <= 23; i++) {
+        const hora = String(i).padStart(2, '0')
+        horasDisponiveis += `<option value="${hora}:00">${hora}:00</option>`
+        horasDisponiveis += `<option value="${hora}:30">${hora}:30</option>`
+    }
+    document.querySelector('select[name="hora"]').innerHTML = horasDisponiveis
+}
+
+criarHorasSelecao()
+
+const concluirAtividade = (event) => {
+    const input = event.target
+    const dataDesteInput = input.value
+
+    const atividade = atividades.find((atividade) => {
+        return atividade.data ==dataDesteInput
+    })
+
+    if(!atividade){
+        return
+    }
+
+    atividade.finalizada = !atividade.finalizada
+}
