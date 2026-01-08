@@ -7,6 +7,11 @@
     <title>Planner GO</title>
     <link rel="stylesheet" href="style.css">
     
+    <!--Font Links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
     <!-- CDN example (jsDelivr) -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/pt-br.js"></script>
@@ -14,24 +19,43 @@
 </head>
 
 <body>
-    <form onsubmit="salvarAtividade(event)">
-        <input type="text" placeholder="Qual a atividade?" name="atividade" required>
-        <div>
-            <select name="dia">
-                <option value="2024-01-05">01 de fe</option>
-            </select>
-        </div>
-        <div>
-            <select name="hora">
-                <option value="10:30">10:30</option>
-            </select>
-        </div>
-        <button>Salvar Atividade</button>
-    </form>
-    <main>
-        <h1>Atividades</h1>
-        <section></section>
-    </main>
+    <div id="app">
+        <form onsubmit="salvarAtividade(event)">
+
+            <div id="place" class="card-bg">
+                <svg fill="#fff" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>pin</title> <path d="M4 12q0-3.264 1.6-6.016t4.384-4.352 6.016-1.632 6.016 1.632 4.384 4.352 1.6 6.016q0 1.376-0.672 3.2t-1.696 3.68-2.336 3.776-2.56 3.584-2.336 2.944-1.728 2.080l-0.672 0.736q-0.256-0.256-0.672-0.768t-1.696-2.016-2.368-3.008-2.528-3.52-2.368-3.84-1.696-3.616-0.672-3.232zM8 12q0 3.328 2.336 5.664t5.664 2.336 5.664-2.336 2.336-5.664-2.336-5.632-5.664-2.368-5.664 2.368-2.336 5.632z"></path> </g></svg>
+                Braga, Portugal
+            </div>
+
+            <div class="fields">
+                <div class="field-wrapper">
+                    <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#FFF"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 1H1V3H15V1Z" fill="#FFF"></path> <path d="M1 5H3V15H1V5Z" fill="#FFF"></path> <path d="M5 13H15V15H5V13Z" fill="#FFF"></path> <path d="M15 9H5V11H15V9Z" fill="#FFF"></path> <path d="M5 5H15V7H5V5Z" fill="#FFF"></path> </g></svg>
+                    <input type="text" placeholder="Qual a atividade?" name="atividade" required>
+                </div>
+
+                <div class="field-wrapper">
+                    <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 0H3V2H1V5H15V2H13V0H10V2H6V0Z" fill="#fff"></path> <path d="M15 7H1V15H15V7Z" fill="#fff"></path> </g></svg>
+                    <select name="dia">
+                        <option value="2024-01-05">01 de fe</option>
+                    </select>
+                </div>
+
+                <div class="field-wrapper">
+                    <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 3V8.41421L10.2929 11.7071L11.7071 10.2929L9 7.58579V3H7Z" fill="#fff"></path> </g></svg>
+                    <select name="hora">
+                        <option value="10:30">10:30</option>
+                    </select>
+                </div>
+            </div>
+            <button>Salvar Atividade</button>
+        </form>
+        <main>
+            <h1>Atividades</h1>
+            <section></section>
+        </main>
+    </div>
+
+
     <script src="script.js"></script>
 </body>
 
