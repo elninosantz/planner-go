@@ -4,12 +4,18 @@
     box-sizing: border-box;
 }
 
+html {
+    min-height: 
+    px;
+}
+
 html, input, select, button, option {
     background-color: #09090B;
     font-family: 'Inter', sans-serif;
     color: #f4f4f5;
     line-height: 120%;
     letter-spacing: -0.02em;
+    height: auto;
 }
 
 /* app */
@@ -142,6 +148,7 @@ time.full {
     display: none;
 }
 
+
 @media (width > 1024px) {
     #app {
         display: flex;
@@ -164,6 +171,7 @@ time.full {
     time.short{
         display: none;
     }
+
 }
 
 section .card-bg {
@@ -175,3 +183,4 @@ section .card-bg {
         opacity: 0;
     }
 }
+
